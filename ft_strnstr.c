@@ -11,33 +11,31 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include <stdio.h>
 // #include <string.h>
+// #include <bsd/string.h>
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
 	size_t	i;
 	size_t	j;
-	size_t	n;
 
 	i = 0;
-	if (!to_find || !to_find[i])
+	if (!to_find || !to_find[i] || str == to_find)
 		return ((char *)str);
 	if (ft_strlen(to_find) > ft_strlen(str))
 		return (NULL);
 	while (str[i] && i < len)
 	{
-		n = i;
 		j = 0;
-		while (to_find[j] && i + n < len + 2)
+		if (str[i] == to_find[j])
 		{
-			if (to_find[j] != str[n])
-				break ;
-			j++;
-			n++;
+			while (i + j < len && str[i + j] == to_find[j])
+			{
+				j++;
+				if (!to_find[j])
+					return ((char *)&str[i]);
+			}
 		}
-		if (to_find[j] == '\0')
-			return ((char *)&str[i]);
 		i++;
 	}
 	return (NULL);
@@ -45,14 +43,13 @@ char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 
 /* int	main(void)
 {
-	const char *str = "this is a long str";
-	const char str2[] = " is";
+	const char *str = "aaabcabcd";
+	const char str2[] = "aabc";
 
-	// str = strnstr(str, str2, 3);
-	// printf("result: %s\n", str);
-	str = ft_strnstr(str, str2, 4);
+	str = strnstr(str, str2, -1);
+	printf("result: %s\n", str);
+	str = ft_strnstr(str, str2, -1);
 	printf("result: %s\n", str);
 
-	printf("test: %s\n", ft_strnstr("lorem ipsum dolor sit amet", "ipsum", 15));
 	return (0);
 } */

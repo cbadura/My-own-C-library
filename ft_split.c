@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
 #include "libft.h"
 
 /* Allocates (with malloc(3)) and returns an array
@@ -18,104 +17,85 @@ of strings obtained by splitting ’s’ using the
 character ’c’ as a delimiter. The array must end
 with a NULL pointer */
 
-static int	find_size(const char *str, char c)
+static int	find_size(char const *s, char c)
 {
-	int	size;
 	int	i;
+	int	size;
 
-	size = 0;
 	i = 0;
-	while (str[i] == c)
-		i++;
-	if (str[i])
-		size = 1;
-	while (str[i])
+	size = 0;
+	while (s && s[i])
 	{
-		while (str[i] && str[i] != c)
-			i++;
-		if (str[i] == c && str[i + 1])
+		if (s[i] != c)
+		{
 			size++;
-		i++;
+			while (s[i] != c && s[i])
+				i++;
+		}
+		else
+			i++;
 	}
 	return (size);
 }
 
-static int	find_longest(const char *str, char c)
+static int	find_len(char const *s, char c, int i)
 {
-	int	longest;
-	int	i;
-	int	tmp;
+	int	len;
 
-	i = 0;
-	longest = 0;
-	while (str[i])
+	len = 0;
+	while (s[i] != c && s[i])
 	{
-		tmp = 0;
-		while (str[i] && str[i] != c)
-		{
-			tmp++;
-			i++;
-		}
-		if (tmp > longest)
-			longest = tmp;
+		len++;
 		i++;
 	}
-	return (longest);
+	return (len);
 }
 
-static char	**create_arr(int size, int longest, const char *str, char c)
+/* static void ft_free(char **strs, int j)
 {
-	char	**strs;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	k = 0;
-	strs = malloc(sizeof(char *) * size + 1);
-	while (str[k] == c)
-		k++;
-	while (i < size)
-	{
-		strs[i] = malloc(sizeof(char) * longest + 1);
-		j = 0;
-		while (str[k] && str[k] != c)
-		{
-			strs[i][j] = str[k];
-			j++;
-			k++;
-		}
-		strs[i][j] = '\0';
-		k++;
-		i++;
-	}
-	return (strs);
-}
+	while (j-- > 0)
+		free(strs[j]);
+	free(strs);
+} */
 
 char	**ft_split(char const *s, char c)
 {
 	char	**strs;
 	int		size;
-	int		longest;
+	int		len;
+	int		i;
+	int		j;
 
-	if (!s || !s[0] || !c)
-		return (NULL);
+	i = 0;
+	j = -1;
 	size = find_size(s, c);
-	longest = find_longest(s, c);
-	strs = create_arr(size, longest, s, c);
-	strs[size] = NULL;
+	strs = (char **)malloc((size + 1) * sizeof(char *));
+	if (!strs)
+		return (NULL);
+	while (++j < size)
+	{
+		while (s[i] == c)
+			i++;
+		len = find_len(s, c, i);
+		strs[j] = ft_substr(s, i, len);
+		if (!strs[j])
+			return (NULL);
+		i += len;
+	}
+	strs[j] = 0;
 	return (strs);
 }
 
 /* int	main(void)
 {
-	char str[] = "hey-there-now";
-	char sep = '-';
+	char str[] = "lorem ipsum dolor sit amet,
+	consectetur adipiscing elit. Sed non risus. Suspendisse";
+	char sep = ' ';
 
 	char **res = ft_split(str, sep);
 	
 	printf("RESULT:\n");
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 13; i++)
 		printf("res: '%s'\n", res[i]);
 	// free strings
 	for (int i = 0; i < 4; i++)

@@ -10,33 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <string.h>
 #include "libft.h"
 
 size_t	ft_strlcat(char *dest, char *src, size_t size)
 {
-	size_t	res;
 	size_t	i;
 	size_t	j;
 
-	if (size < ft_strlen(dest))
-		return (ft_strlen(dest) + 1 + size);
-	res = ft_strlen(src) + ft_strlen(dest);
-	i = 0;
+	if (size <= ft_strlen(dest))
+		return (size + ft_strlen(src));
+	i = ft_strlen(dest);
 	j = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[j] != '\0' && (i + j) < size - 1)
+	while (src[j] && i + 1 < size)
 	{
-		dest[i + j] = src[j];
+		dest[i] = src[j];
+		i++;
 		j++;
 	}
-	dest[i + j] = '\0';
-	return (res);
+	dest[i] = '\0';
+	return (ft_strlen(dest) + ft_strlen(&src[j]));
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char src[7], dest[12], dest_two[12];
 	size_t total_len = 0;
@@ -49,13 +46,13 @@ int	main(void)
 	printf("result: %s\n", dest);
 	printf("len: %zu\n", total_len);
 
-	/* total_len = strlcat(dest_two, src, 12);
-	printf("result: %s\n", dest_two);
-	printf("len: %zu\n", total_len); */
+	// total_len = strlcat(dest_two, src, 12);
+	// printf("result: %s\n", dest_two);
+	// printf("len: %zu\n", total_len);
 
 	char dst[10] = "a";
 	printf("len: %ld\n", ft_strlcat(dst, "lorem ipsum dolor sit amet", 0));
 	printf("res: %s\n", dst);
 
 	return (0);
-}
+} */

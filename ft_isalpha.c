@@ -12,16 +12,16 @@
 
 // #include <stdio.h>
 
-static int	check_downcase(char c)
+static int	check_downcase(int c)
 {
-	if (c >= 'a' && c <= 'z')
+	if (c >= 97 && c <= 122)
 		return (1);
 	return (0);
 }
 
-static int	check_upcase(char c)
+static int	check_upcase(int c)
 {
-	if (c >= 'A' && c <= 'Z')
+	if (c >= 65 && c <= 90)
 		return (1);
 	return (0);
 }

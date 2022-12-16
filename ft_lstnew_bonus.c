@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
 #include "libft.h"
 
 t_list	*ft_lstnew(void *content)
 {
 	t_list			*head;
-	size_t			len;
 
 	head = NULL;
 	head = malloc(sizeof(t_list));
@@ -25,11 +23,7 @@ t_list	*ft_lstnew(void *content)
 	if (!content)
 		head->content = NULL;
 	else
-	{
-		len = ft_strlen(content);
-		head->content = malloc(len);
-		ft_memcpy(head->content, content, len);
-	}
+		head->content = (void *)content;
 	head->next = NULL;
 	return (head);
 }

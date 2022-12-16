@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include <stdio.h>
 // #include <string.h>
 
 /* Applies the function ’f’ to each character of the
@@ -19,7 +18,7 @@ string ’s’, and passing its index as first argument
 to create a new string (with malloc(3)) resulting
 from successive applications of ’f’. */
 
-/* void ft_toupper(unsigned int n, char *s)
+/* void my_toupper(unsigned int n, char *s)
 {
     if (s[n] >= 'a' && s[n] <= 'z')
         s[n] = s[n] - 32;
@@ -32,7 +31,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 	i = 0;
 	while (s[i])
 	{
-		f(i, s);
+		f(i, &s[i]);
 		i++;
 	}
 }
@@ -40,9 +39,9 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 /* int main(void)
 {
 	char str[6] = "hello";
-	void (*ft_toupper_ptr)(unsigned int, char*) = &ft_toupper;
+	void (*my_toupper_ptr)(unsigned int, char*) = my_toupper;
 
-	ft_striteri(str, ft_toupper_ptr);
+	ft_striteri(str, my_toupper_ptr);
 	printf("new: %s\n", str);
 	return 0;
 } */

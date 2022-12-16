@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
 #include "libft.h"
 
 /* Allocates (with malloc(3)) and returns a substring
@@ -20,17 +19,25 @@ maximum size ’len’ */
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*sub;
-	unsigned int	i;
+	char	*sub;
+	size_t	i;
+	size_t	mlen;
 
 	i = 0;
-	if (!s || !s[0] || (size_t)start > ft_strlen((char *)s)
-		|| (start + len) > ft_strlen((char *)s))
-		return (NULL);
-	sub = malloc(len + 1);
+	if (!s || !s[0] || (size_t)start > ft_strlen(s))
+	{	
+		sub = malloc(1);
+		sub[0] = '\0';
+		return (sub);
+	}
+	if (len < ft_strlen(s))
+		mlen = len;
+	else
+		mlen = ft_strlen(s);
+	sub = malloc(mlen + 1);
 	if (!sub)
 		return (NULL);
-	while (i < len)
+	while (i < len && i < ft_strlen(s))
 	{
 		sub[i] = s[start + i];
 		i++;
@@ -41,9 +48,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 /* int main(void)
 {
-	char const *s = "hello";
-	unsigned int start = 5;
-	size_t len = 2;
+	char const *s = "0123456789";
+	unsigned int start = 9;
+	size_t len = 10;
 
 	char *sub = ft_substr(s, start, len);
 	printf("sub: %s\n", sub);

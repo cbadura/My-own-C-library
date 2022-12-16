@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 16:20:02 by cbadura           #+#    #+#             */
-/*   Updated: 2022/12/10 16:20:04 by cbadura          ###   ########.fr       */
+/*   Created: 2022/12/10 16:32:52 by cbadura           #+#    #+#             */
+/*   Updated: 2022/12/10 16:32:54 by cbadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* void	del(void *ptr)
 {
 	free(ptr);
-} */
+}
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
@@ -23,6 +23,21 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		return ;
 	del(lst->content);
 	free(lst);
+} */
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*temp;
+
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = temp;
+	}
+	lst = NULL;
 }
 
 /* int main(void)
@@ -45,8 +60,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		write(1, "\n", 1);
 		tmp = tmp->next;
 	}
-		void (*del_ptr)(void *) = &del;
-	ft_lstdelone(head->next, del_ptr);
+	void (*del_ptr)(void *) = &del;
+	ft_lstclear(&head, del_ptr);
 	tmp = head;
 	while (tmp)
 	{

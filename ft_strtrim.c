@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
 #include "libft.h"
 
 /* Allocates (with malloc(3)) and returns a copy of
@@ -52,26 +51,40 @@ static int	find_end(char const *s1, char const *set)
 	return (end);
 }
 
+static int	get_len(int start, int end)
+{
+	int	len;
+
+	if (end < start)
+		len = start - end;
+	else
+		len = end - start;
+	return (len);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*trimmed;
 	int		start;
 	int		end;
 	int		i;
+	int		len;
 
-	if (!s1 || !set)
+	if (!s1)
 		return (NULL);
+	if (!set)
+		return (ft_strdup(s1));
 	i = 0;
 	start = find_start(s1, set);
 	end = find_end(s1, set);
-	trimmed = malloc(end - start + 1);
+	len = get_len(start, end);
+	trimmed = malloc(len + 1);
 	if (!trimmed)
 		return (NULL);
 	while (start < end)
 	{
-		trimmed[i] = s1[start];
+		trimmed[i++] = s1[start];
 		start++;
-		i++;
 	}
 	trimmed[i] = '\0';
 	return (trimmed);
@@ -79,8 +92,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 /* int main(void)
 {
-	char const *s1 = "enlhelloenl";
-	char const *set = "len";
+	char const *s1 = "   xxx   xxx";
+	char const *set = " x";
 
 	char *trimmed = ft_strtrim(s1, set);
 	printf("trimmed: '%s'\n", trimmed);

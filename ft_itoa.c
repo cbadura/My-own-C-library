@@ -14,14 +14,15 @@
 representing the integer received as an argument.
 Negative numbers must be handled. */
 
-// #include <stdio.h>
 #include "libft.h"
 
-static int	get_len(long num)
+static int	get_len(int num)
 {
 	int	len;
 
 	len = 0;
+	if (num == 0)
+		len++;
 	if (num < 0)
 	{
 		num = -num;
@@ -41,15 +42,14 @@ char	*ft_itoa(int n)
 	char	*str;
 
 	len = get_len(n);
-	str = malloc(sizeof(int) * len + 1);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	str = malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
 	str[len] = '\0';
 	if (n == 0)
-	{
 		str[0] = '0';
-		return (str);
-	}
 	if (n < 0)
 	{
 		n = -n;
@@ -62,10 +62,10 @@ char	*ft_itoa(int n)
 	}
 	return (str);
 }
-
-/* int main(void)
+/* 
+int main(void)
 {
-    int num = -112434;
+    int num = -12;
     char *numStr = ft_itoa(num);
     
 	printf("str: %s\n", numStr);

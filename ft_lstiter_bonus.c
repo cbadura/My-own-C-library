@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 16:20:02 by cbadura           #+#    #+#             */
-/*   Updated: 2022/12/10 16:20:04 by cbadura          ###   ########.fr       */
+/*   Created: 2022/12/10 16:32:44 by cbadura           #+#    #+#             */
+/*   Updated: 2022/12/10 16:32:47 by cbadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* void	del(void *ptr)
+/* void my_toupper(char *s)
 {
-	free(ptr);
+    while(*s)
+	{
+		if (*s >= 'a' && *s <= 'z')
+        	*s = *s - 32;
+		s++;
+	}
 } */
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (!lst || !del)
+	t_list	*curr;
+
+	if (!lst || !f)
 		return ;
-	del(lst->content);
-	free(lst);
+	curr = lst;
+	while (curr)
+	{
+		(*f)(curr->content);
+		curr = curr->next;
+	}
 }
 
 /* int main(void)
@@ -45,8 +56,11 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		write(1, "\n", 1);
 		tmp = tmp->next;
 	}
-		void (*del_ptr)(void *) = &del;
-	ft_lstdelone(head->next, del_ptr);
+	void (*my_toupper_ptr)(char *) = &my_toupper;
+	ft_lstiter(head, my_toupper_ptr);
+	printf("AFTER\n");
+	write(1, head->content, 3);
+	write(1, "\n", 1);
 	tmp = head;
 	while (tmp)
 	{

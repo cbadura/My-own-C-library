@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include <stdio.h>
 // #include <string.h>
 
 char	*ft_strrchr(const char *str, int c)
@@ -19,12 +18,12 @@ char	*ft_strrchr(const char *str, int c)
 	size_t	i;
 	size_t	len;
 
-	if (str[0] == '\0')
-		return ((char *)str);
-	i = 0;
 	len = ft_strlen(str);
-	if (!len)
+	if (c == '\0')
+		return ((char *)str + len);
+	if (str[0] == '\0')
 		return (NULL);
+	i = 0;
 	while (i < len - 1)
 	{
 		i++;
@@ -33,7 +32,7 @@ char	*ft_strrchr(const char *str, int c)
 	i = 0;
 	while (i < len)
 	{
-		if (*str == c)
+		if (*str == (unsigned char)c)
 			return ((char *)str);
 		str--;
 		i++;
@@ -45,10 +44,14 @@ char	*ft_strrchr(const char *str, int c)
 		return ((char *)str); */
 /* int main()
 {
-    char str[8]  = "bonjour";
-    char letter = 's';
+    char str[8]  = "";
+    char letter = 'V';
+	char *empty = (char*)calloc(1, 1);
     
 	printf("strrchr -> '%s'\n", strrchr(str, letter));
     printf("ft_strrchr -> '%s'\n", ft_strrchr(str, letter));
+
+	printf("strrchr -> '%s'\n", strrchr(empty, letter));
+    printf("ft_strrchr -> '%s'\n", ft_strrchr(empty, letter));
     return 0;
 } */
